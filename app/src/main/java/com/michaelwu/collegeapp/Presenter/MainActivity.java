@@ -93,13 +93,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {//switch to profile fragment
             // assign a new guardian fragment
         fragment=new ProfileFragment();
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//            Fragment fraggy = new ProfileFragment();
-//            fragmentTransaction.add(0, fraggy,null);
-//            fragmentTransaction.commit();
-
         } else if (id == R.id.nav_family) {//switch to a family fragment
             fragment=new GuardianFragment();
 

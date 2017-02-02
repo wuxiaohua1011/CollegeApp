@@ -1,5 +1,6 @@
 package com.michaelwu.collegeapp.Presenter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.michaelwu.collegeapp.R;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 private EditText userName,password;
     private Button submitButton,createNewAccountButton;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,9 @@ private EditText userName,password;
             userName.setText("");
             password.setText("");
         }
+
+        userName.setText("try2@gmail.com");
+        password.setText("try2");
     }
 
     private void addListener() {
@@ -57,16 +62,21 @@ private EditText userName,password;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.activity_login_button_submit:
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Loading");
+                progressDialog.show();
                 BackendlessUser user = new BackendlessUser();
                 Backendless.UserService.login(userName.getText().toString(),password.getText().toString(), new AsyncCallback<BackendlessUser>() {
 
                     @Override
                     public void handleResponse(BackendlessUser response) {
+                        progressDialog.dismiss();
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));finish();
                     }
                     @Override
                     public void handleFault(BackendlessFault fault) {
-                        Toast.makeText(LoginActivity.this, ""+fault.toString(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, ""+fault.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
